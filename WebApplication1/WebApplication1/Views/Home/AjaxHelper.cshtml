@@ -1,0 +1,32 @@
+﻿@model WebApplication1.Models.Employee
+@{
+    
+}
+    <div style="display:none;" id="loader">
+        <h1>Loading....</h1>
+    </div>
+
+    @using (Ajax.BeginForm("AjaxHelper", new AjaxOptions()
+    {
+        OnSuccess = "fnSuccess",
+        OnFailure = "fnFailure",
+        HttpMethod = "POST",
+        LoadingElementId = "loader",
+        LoadingElementDuration = 2000
+    }))
+    {
+        @Html.EditorFor(x => x.Name, new { htmlAttributes = new { @class = "form-control" } })<br />
+        @Html.EditorFor(x => x.Email, new { htmlAttributes = new { @class = "form-control" } })<br />
+
+        <button type="submit" class="btn btn-success">Add New Employee</button>
+    }
+
+<script>
+    function fnSuccess(data) {
+        console.log(data);
+    }
+
+    function fnFailure(err) {
+        console.log(err);
+    }
+</script>

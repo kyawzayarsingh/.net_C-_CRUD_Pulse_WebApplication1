@@ -1,0 +1,46 @@
+﻿@model Pulse.Models.Address
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>GetBookAddress</title>
+</head>
+<body>
+    <div>
+        <h4>Address</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.HomeNo)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.HomeNo)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.AddressCode)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.AddressCode)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.PhoneNo)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.PhoneNo)
+            </dd>
+    
+        </dl>
+    </div>
+</body>
+</html>

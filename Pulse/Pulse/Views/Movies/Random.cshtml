@@ -1,0 +1,57 @@
+﻿@using Pulse.Models
+@model Movies
+@{
+    ViewBag.Title = "Random";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Random</h2>
+<h4>@Model.Name</h4>
+
+@* get ViewData in here => declare using Pulse.Models *@
+
+<h5>@(((Movies) ViewData["movies"]).Name)</h5>
+
+@* ViewData Value has one, not coming with list, so you don't need to cast, what type is *@
+<em>@ViewData["smovie"]</em>
+
+@* calling ViewBag in here *@
+
+<h6>@ViewBag.mymovie</h6>
+
+@* calling TempData in here *@
+
+<h3>@TempData["movieName"]</h3>
+
+<ul>
+    @foreach(var item in ViewBag.myList)
+            {
+                <li>@item</li>
+            }
+</ul>
+<br />
+
+<ul>
+    @foreach(var movieList in ViewBag.myMovieList)
+            {
+                <li>Id - @movieList.Id</li>
+                <li>Name - @movieList.Name</li>
+            }
+</ul>
+<br />
+
+<ul>
+    @* If you using ViewData to get all data in a list, you need to cast that what type are they *@
+    @foreach (var movieData in (List<string>)ViewData["movieDataList"])
+    {
+        <li>@movieData</li>
+    }
+</ul>
+<br />
+<ul>
+    @* If you using ViewData to get all data in a list, two way to cast before and after *@
+    @foreach (var movieData in ViewData["movieDataList"] as List<string>)
+    {
+        <li>@movieData</li>
+    }
+</ul>

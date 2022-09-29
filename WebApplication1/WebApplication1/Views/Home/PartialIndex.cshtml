@@ -1,0 +1,11 @@
+﻿@model IEnumerable<WebApplication1.Models.Employee>
+@{
+    ViewBag.Title = "PartialIndex";
+}
+
+<h2>PartialIndex</h2>
+
+@foreach(var item in Model)
+            {
+                @Html.Partial("_Card",item)
+            }

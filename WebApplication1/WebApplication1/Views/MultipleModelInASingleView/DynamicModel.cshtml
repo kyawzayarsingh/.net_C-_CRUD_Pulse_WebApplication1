@@ -1,0 +1,20 @@
+﻿@using WebApplication1.Models
+@model dynamic
+
+@{
+    ViewBag.Title = "DynamicModel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Multiple Models in a Single View using Dynamic Model</h2>
+<h3>Employee List</h3>
+@foreach (var employee in Model.empList)
+{
+    <h5>@employee.Name</h5>
+}
+<br />
+<h3>Student List</h3>
+@foreach (var student in Model.stuList)
+{
+    <h5>@student.StudentName</h5>
+}

@@ -1,0 +1,128 @@
+﻿@model WebApplication1.Models.Employee
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div>
+    @* when click button type submit, it becomes post type automatically, and it comes to BeginForm()
+        in your BeginForm(Action, Controller), so it goes to View to Controller
+    *@
+    <section>
+        <h1>Pass data using Params</h1>
+        @using (Html.BeginForm("PostUsingParameter", "Home"))
+        {
+            @Html.TextBox("firstname", "", new { @class = "form-control" }) <br />
+            @Html.TextBox("lastname", "", new { @class = "form-control" })<br />
+            <input type="submit" class="btn btn-success" value="add" />
+        }
+    </section>
+    <section>
+        <h1>Pass data using Requests</h1>
+        @using (Html.BeginForm("PostUsingRequest", "Home"))
+        {
+            @Html.TextBox("firstname", "", new { @class = "form-control" }) <br />
+            @Html.TextBox("lastname", "", new { @class = "form-control" })<br />
+            <input type="submit" class="btn btn-success" value="add" />
+        }
+    </section>
+    <section>
+        <h1>Pass data using FormCollection</h1>
+        @using (Html.BeginForm("PostUsingFormCollection", "Home"))
+        {
+            @Html.TextBox("firstname", "", new { @class = "form-control" }) <br />
+            @Html.TextBox("lastname", "", new { @class = "form-control" })<br />
+            <input type="submit" class="btn btn-success" value="add" />
+        }
+    </section>
+
+    <section>
+        <h1>Pass data using strongly binding</h1>
+        @using (Html.BeginForm("PostUsingBinding", "Home", FormMethod.Post))
+        {
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+            <br />
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            <br />
+            <input type="submit" class="btn btn-success" value="add" />
+        }
+    </section>
+
+    <section>
+        <h1>Pass data using loosely binding</h1>
+        @using (Html.BeginForm("SubmitData", "Home", FormMethod.Post))
+        {
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+            @Html.ValidationMessage("Name", new { @class = "text-danger" })
+            <br />
+            <br />
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            @Html.ValidationMessage("Email", new { @class = "text-danger" })
+            <br />
+            <br />
+            <input type="submit" class="btn btn-success" value="add" />
+        }
+    </section>
+</div>
+<br />
+<div>
+    <h3>Get Data from Controller to View using Ajax</h3>
+    <ul>
+        <li class="empId"></li>
+        <li class="empName"></li>
+        <li class="empEmail"></li>
+    </ul>
+    <button type="submit" class="btn btn-success" onclick="handleClick()">Get Data using Ajax</button>
+</div>
+
+<br />
+<div>
+    <h3>Get Data from View to Controller using Ajax</h3>
+    @Html.TextBox("Id", "", new { id="empId", @class = "form-control" })<br />
+    @Html.TextBox("Name", "", new { id = "empName", @class = "form-control" })<br />
+    @Html.TextBox("Email", "", new { id = "empEmail", @class = "form-control" })<br />
+    <button type="submit" class="btn btn-success" onclick="buttonClick()">Get Data using Ajax</button>
+</div>
+
+<script>
+    //using method get
+    function handleClick() {
+        $.ajax({
+            url: "/Home/GetEmployee",
+            method: "GET",
+            success: function (data) {
+                console.log(data);
+                data = JSON.parse(data);
+                $(".empId").text(data.Id);
+                $(".empName").text(data.Name);
+                $(".empEmail").text(data.Email);
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        })
+    }
+
+    function buttonClick() {
+        let obj = {
+            Id: $("#empId").val(),
+            Name: $("#empName").val(),
+            Email: $("#empEmail").val()
+        }
+        SubmitForm(obj);
+    }
+
+    //using method post
+    function SubmitForm(obj) {
+        $.ajax({
+            url: "/Home/AddEmployee",
+            method: "POST",
+            data: obj,
+            success: function (data) {
+                alert(data);
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        })
+    }
+</script>

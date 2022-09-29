@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Hello from Filters</h1>
+<h4>@DateTime.Now</h4>
+
+@* you can also written ASCII codes *@
+@Html.Raw("<h1>It convert the string with HTML tag in a HTML Format in Browser</h1>");
+@Html.Raw("&#32")
+
+@* In your table, the data is showing with html tags, you will be used [Html Raw] *@
+

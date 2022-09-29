@@ -1,0 +1,21 @@
+﻿@model WebApplication1.ViewModels.EmployeeStudentViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Multiple Models in a Single View using ViewModel</h2>
+<h3>Employee List</h3>
+@foreach (var employee in Model.Employees)
+{
+    <h5>@employee.Name</h5>
+}
+<br />
+<h3>Student List</h3>
+@foreach (var student in Model.Students)
+{
+    <h5>@student.StudentName</h5>
+}
+
+
+

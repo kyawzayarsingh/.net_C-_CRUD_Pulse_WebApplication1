@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "AjaxList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>AjaxList</h2>
+@* you can get data without page refreshing, using Ajax Helpers *@
+
+@Ajax.ActionLink("All Countries", "Countries", new AjaxOptions()
+{
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "ListContainer"
+})
+
+@Ajax.ActionLink("All States", "States", new AjaxOptions()
+{
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "ListContainer"
+})
+
+@Ajax.ActionLink("All Cities", "Cities", new AjaxOptions()
+{
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "ListContainer"
+})
+
+<div id="ListContainer">
+
+</div>

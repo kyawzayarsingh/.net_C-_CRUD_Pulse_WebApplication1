@@ -1,0 +1,20 @@
+﻿@using WebApplication1.Models
+@model Tuple<List<Employee>, List<Student>, string>
+@{
+    ViewBag.Title = "TupleModel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>TupleModel</h2>
+<h4>@Model.Item3</h4>
+
+@foreach (var emp in Model.Item1)
+{
+    <h5>@emp.Name</h5>
+}
+
+@foreach (var stu in Model.Item2)
+{
+    <h5>@stu.StudentName</h5>
+}
+

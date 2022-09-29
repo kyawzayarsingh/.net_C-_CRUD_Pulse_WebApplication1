@@ -1,0 +1,53 @@
+﻿@model Pulse.Models.Employee
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+@{
+    var a = 1;
+    var b = 2;
+    var c = a + b;
+    var colorList = new List<string>() { "red", "green", "blue", "yellow", "black" };
+    bool isTrue = true;
+}
+<ul>
+    <li>@Model.Id</li>
+    <li>@Model.Name</li>
+    <li>@Model.Address</li>
+    <li>@DateTime.Now</li>
+    <li>@(5.3)</li>
+    <li>@c</li>
+    <li>@colorList.FirstOrDefault()</li>
+    @* if we write for example => twitter acc - @kyaw12-don *@
+    <li>Twitter Acc - @@kyaw12-don</li>
+    @if(isTrue)
+            {
+                <li>This is true statement</li>
+            }
+    <li>@(isTrue? "This is ternary true statement": "False Statement")</li>
+</ul>
+<br />
+<ul>
+    @foreach(var item in colorList)
+            {
+                <li>@item</li>
+            }
+</ul>
+
+<div>
+    @* if we send particular item or some id while we going throught redirect action links
+        we can send using new{} in ActionLink
+    *@
+    @Html.ActionLink("Click Me", "Index", new { email = "Kyaw" })
+</div>
+<br />
+<div>
+    @Html.TextBox("Name", "", new { id ="sname", @class="form-control", style ="width: 200px;"})
+    <br/>
+    @Html.CheckBox("myCheck", true, new {@class= "form-check-input" })
+    <br />
+    <br />
+    @Html.Password("myPassword","", new {@class= "form-control" })
+</div>

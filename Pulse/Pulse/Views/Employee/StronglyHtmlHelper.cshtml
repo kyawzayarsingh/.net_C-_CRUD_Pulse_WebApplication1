@@ -1,0 +1,20 @@
+﻿@using Pulse.Models
+@model Employee
+@{
+    ViewBag.Title = "StronglyHtmlHelper";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>StronglyHtmlHelper</h2>
+<div>
+    @using (Html.BeginForm("myForm"))
+    {
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        <br />
+        @Html.TextAreaFor(m => m.Address, new { @class = "form-control" })
+        <br />
+        <button type="submit" class="btn btn-success">Submit</button>
+        <button type="button" class="btn btn-danger">Cancel</button>
+    }
+</div>
+

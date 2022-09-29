@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "QuerySyntax";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>QuerySyntax</h2>
+<div style="display:flex;">
+    @foreach (var item in ViewBag.querySyntax)
+    {
+        <p style="padding-right: 15px;">@item</p>
+    }
+</div>
+
+<h2>MethodSyntax</h2>
+<div style="display:flex;">
+    @foreach (var item in ViewBag.methodSyntax)
+    {
+        <p style="padding-right: 15px;">@item</p>
+    }
+</div>
+
+<h2>MixedSyntax</h2>
+<div>
+    <p>@ViewBag.mixedSyntax</p>
+</div>

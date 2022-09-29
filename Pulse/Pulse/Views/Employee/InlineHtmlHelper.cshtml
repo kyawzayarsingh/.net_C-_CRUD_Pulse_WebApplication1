@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "InlineHtmlHelper";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>InlineHtmlHelper</h2>
+
+@helper MyListHelper(string[] str)
+{
+    if (str.Length == 0)
+    {
+        <label>No data Exists</label>
+    }
+    else
+    {
+        <ul>
+            @foreach (var item in str)
+            {
+                <li>@item</li>
+            }
+        </ul>
+    }
+}
+
+<br />
+<div>
+    <label>Example - Name List</label>
+    @MyListHelper(new string[] { "Tom", "Jerry", "Smith", "John" })
+</div>
+
+<div>
+    <label>Example - Empty List</label>
+    @MyListHelper(new string[] {})
+</div>
+
+<div>
+    <label>Standard HTML helpers</label>
+    @* ActionLink("Name", "ActionName","Controller") 
+       controller is used when we are using another
+       actions from another controller, I wll show you example below *@
+    @Html.ActionLink("click me", "Index")
+</div>
+
+<div>
+    <label>Action Link with Another Controller</label>
+    @Html.ActionLink("Go to Movies Index Page", "Index", "Movies")
+</div>
