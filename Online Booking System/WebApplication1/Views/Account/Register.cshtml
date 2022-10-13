@@ -1,0 +1,224 @@
+﻿@model WebApplication1.Models.User
+
+@{
+    ViewBag.Title = "Register";
+}
+
+<div class="card mb-2">
+    <div class="card-header">
+        Authentication
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, htmlAttributes: new { autoComplete = "off" }))
+        {
+            @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>User Login</h4>
+            <hr />
+
+            <input type="hidden" id="FileType" />
+            <input type="hidden" id="FileName" />
+            <input type="hidden" id="FileBase64" />
+            <input type="hidden" id="FileSize" />
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.Profile, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-12">
+                        <div class="pt-1 d-flex align-items-center">
+                            <div class="border rounded p-3 photoPlaceholder">
+                                <img src="~/ClientSideLibraries/images/user.png" class="userProfileImage" width="50" height="50" />
+                            </div>
+                            <input type="file" class="d-none" name="uploadUserProfile" id="uploadUserProfile" accept="image/jpg, image/jpeg, image/png" />
+                            <button type="button" class="btn btn-success ml-4 uploadUserProfileBtn">Upload Photo</button>
+                            <button type="button" class="btn btn-danger ml-4" id="deleteUserProfileBtn" style="display:none;">Delete Photo</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-6" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Type, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                        @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.DOB, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.Address, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+
+        }
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+        function clearImageData() {
+            $("#FileType").val("");
+            $("#FileName").val("");
+            $("#FileBase64").val("");
+            $("#FileSize").val("");
+        }
+
+        $(document).ready(function () {
+            $(".uploadUserProfileBtn").on("click", function () {
+                $("#uploadUserProfile").click();
+            })
+
+            $('#uploadUserProfile').on("change", function () {
+                let input = document.getElementById("uploadUserProfile");
+                let ext = String($('#uploadUserProfile').val()).split('.').pop().toLowerCase();
+                let totalFileSize = 0;
+
+                for (let i = 0; i < input.files.length; i++)
+                    totalFileSize += input.files[i].size;
+
+                //total File size is 1 MB
+                if (totalFileSize > 1048576) { //calclulate in byte => 1024 KB * 1024 B (1048576 equal 1 MB)
+                    //Swal.fire({
+                    //    html: "Your selected total File size exceed, please use file with 1 MB of total size.",
+                    //    customClass: 'swal-size-sm'
+                    //});
+                    alert("Your selected total File Size exceed, please use file with 1MB of total size")
+                    clearImageData();
+                    $('#uploadUserProfile').val(""); // clear current selected file
+                }
+                else if ($.inArray(ext, ['jpg', 'jpeg', 'png']) == -1) {
+                    //Swal.fire({
+                    //    html: "Only .jpg and .png files are allowed.",
+                    //    customClass: 'swal-size-sm'
+                    //});
+
+                    alert("Only .jpg and .png files are allowed")
+
+                    clearImageData();
+                    $('#uploadUserProfile').val(""); // clear current selected file
+                }
+                else {
+
+                    for (let i = 0; i < input.files.length; i++) {
+                        let file = document.querySelector('input[name=uploadUserProfile]').files[i];
+                        let fileName = file.name;
+                        let fileType = file.type;
+
+                        let docReader = new FileReader();
+                        docReader.addEventListener("load", (function (doc) {
+                            return function (event) {
+                                let docFile = event.target;
+                                let base64Image = docFile.result;
+
+                                let img = document.createElement("img");
+                                img.setAttribute("src", base64Image);
+                                img.setAttribute("style", "width: 100px; height: 100px; cursor: pointer;");
+                                img.setAttribute("class", "img img-responsive");
+                                img.setAttribute("id", "imgUpdateScreenshot");
+                                img.setAttribute("title", fileName);
+
+                                $(".photoPlaceholder").removeClass("p-3");
+                                $(".userProfileImage").hide();
+                                $(".photoPlaceholder").append(img);
+
+                                $("#FileType").val(fileType);
+                                $("#FileName").val(fileName);
+                                $("#FileBase64").val(base64Image.substring(base64Image.indexOf(',') + 1));
+                                //$("#FileBase64WithHeader").val(base64Image);
+                                $("#FileSize").val(totalFileSize / 1024,);
+
+                                $('#uploadUserProfile').val(""); // clear current selected file
+                                $(".uploadUserProfileBtn").hide();
+                                $("#deleteUserProfileBtn").show();
+                            };
+                        })(file));
+                        //Read the image
+                        docReader.readAsDataURL(file);
+                    }
+                }
+            });
+
+            $("#deleteUserProfileBtn").on("click", function () {
+                $(this).hide();
+                $(".uploadUserProfileBtn").show();
+                $("#imgUpdateScreenshot").remove();
+                $(".photoPlaceholder").addClass("p-3");
+                $(".userProfileImage").show();
+            });
+        })
+    </script>
+}

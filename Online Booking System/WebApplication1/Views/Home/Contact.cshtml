@@ -1,0 +1,49 @@
+﻿@model IEnumerable<WebApplication1.Models.TBLImage>
+@{
+    ViewBag.Title = "Contact";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<table class="table" id="tab1">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Image)
+        </th>
+    </tr>
+
+    @foreach(var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title);
+                    </td>
+                    @*
+                     item.Image => in your database, the path is save with ../Image/FileName
+                    <td>
+                        <img src="@Html.DisplayFor(modelItem => item.Image)" width="80px" height="50px" />
+                    </td>*@
+
+                    @* item.Image => in your database, the path is save with ~/Image/FileName *@
+                    <td>
+                        <img src="@Url.Content(item.Image)" width="80px" height="50px" />
+                    </td>
+                </tr>
+            }
+</table>
+
+<address>
+    One Microsoft Way<br />
+    Redmond, WA 98052-6399<br />
+    <abbr title="Phone">P:</abbr>
+    425.555.0100
+</address>
+
+@using(Html.BeginForm("Contact","Home",FormMethod.Post, new {@enctype = "multipart/form-data" })){ 
+    <input type="file" class="btn" name="file" /> 
+    <br />
+    <input type="submit" class="btn btn-success" value="Save" />
+}

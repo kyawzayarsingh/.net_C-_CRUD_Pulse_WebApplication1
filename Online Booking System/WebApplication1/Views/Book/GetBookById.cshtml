@@ -1,0 +1,47 @@
+﻿@model WebApplication1.Models.Book
+
+@{
+    ViewBag.Title = "GetBookById";
+}
+
+<h2>GetBookById</h2>
+
+<div>
+    <h4>Book</h4>
+    <hr />
+    <ul>
+        <li>Title - @Model.Title</li>
+        <li>Author - @Model.Author</li>
+        <li>Price - @Model.Price</li>
+    </ul>
+    @*<dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Author)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Author)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+    </dl>*@
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

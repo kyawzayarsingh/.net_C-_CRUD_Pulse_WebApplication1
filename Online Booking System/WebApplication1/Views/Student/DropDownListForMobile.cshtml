@@ -1,0 +1,53 @@
+﻿@model WebApplication1.Models.PhoneViewModel
+@{
+    ViewBag.Title = "DropDownListForMobile";
+}
+
+<h2>DropDownListForMobile</h2>
+<br />
+
+<table class="table">
+    <tr>
+        <td>@Html.LabelFor(x => Model.MobileBrand, htmlAttributes: new { @class = "control-label" })</td>
+        <td>@Html.DropDownListFor(x => Model.MobileBrand, new SelectList(Model.BrandList, "Value", "Text"), new {@class = "form-control", id = "mobileBrand" })</td>
+    <tr id="mobilePhoneDiv">
+        <td>@Html.LabelFor(x => Model.MobilePhone, htmlAttributes: new { @class = "control-label" })</td>
+        <td><select class="form-control" id="mobilePhoneDropdown"></select></td>
+    </tr>
+</table>
+
+@section Scripts {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#mobilePhoneDiv").hide();
+        });
+
+        $("#mobileBrand").change(function () {
+            var selectedVal = $(this).val();
+            if (selectedVal == 0) {
+                $("#mobilePhoneDiv").hide();
+            }
+
+            $.ajax({
+                type: "POST",
+                dataType: "JSON",
+                url: "/Student/GetMobilePhoneByBrandId",
+                data: { brandId: selectedVal },
+                success: function (response) {
+                    if (response.data.length > 0) {
+                        var markup = "<option value='0'>Select Phone</option>";
+                        for (let i = 0; i < response.data.length; i++) {
+                            markup += "<option value=" + response.data[i].PhoneId + ">" + response.data[i].PhoneName + "</option>";
+                        }
+                        $("#mobilePhoneDropdown").html(markup);
+                        $("#mobilePhoneDiv").show();
+                    }
+                },
+                error: function (error) {
+                    console.log("Error:" + error);
+                }
+            })
+        })
+    </script>
+}

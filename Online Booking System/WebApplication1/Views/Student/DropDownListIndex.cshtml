@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "DropDownListIndex";
+}
+
+<h2>DropDownListIndex</h2>
+<br />
+<table class="table">
+    <tr>
+        <td>Class Name:</td>
+        <td>@Html.DropDownList("dropdownClasses", ViewBag.classList as SelectList, "Select Class -", htmlAttributes: new { @class = "form-control", onChange = "getStudent()" })</td>
+    </tr>
+    <tr>
+        <td>Student Name:</td>
+        @*<td>@Html.DropDownList("dropdownStudents",new SelectList(Enumerable.Empty<SelectListItem>()), String.Empty, htmlAttributes: new { @class = "form-control" })</td>*@
+        <td>@Html.DropDownList("dropdownStudents", new SelectList(""), String.Empty, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })</td>
+    </tr>
+</table>
+
+@section Scripts {
+    <script type="text/javascript">
+        function getStudent() {
+            let classId = $("#dropdownClasses").val();
+
+            $.ajax({
+                url: '@Url.Action("GetStudents","Student")?classId=' + classId,
+                method: 'GET',
+                contentType: 'html',
+                success: function (res) {
+                    if (res) {
+                        $("#dropdownStudents").removeAttr("disabled");
+                    }
+                    $("#dropdownStudents").empty();
+                    $("#dropdownStudents").append(res);
+                }
+            })
+        }
+        $(document).ready(function () {
+
+        });
+    </script>
+}

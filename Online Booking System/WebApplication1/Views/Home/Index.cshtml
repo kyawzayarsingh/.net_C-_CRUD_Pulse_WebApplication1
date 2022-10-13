@@ -1,0 +1,50 @@
+﻿@model IEnumerable<WebApplication1.DTOs.Info.InfoResponse>
+@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<p>
+    @Html.ActionLink("Create New", "Create", new { controller = "Home", @class = "btn btn-primary" })
+</p>
+<table class="table" id="tab1">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FatherName)
+        </th>
+    </tr>
+</table>
+
+@section Scripts{
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.ajax({
+                url: "https://localhost:44374/api/GetAllInfo",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                type: "Get",
+                success: function (result) {
+                    if (result) {
+                        var res = '';
+                        $.each(result, function (i, row) {
+                            res += "<tr><td>" + row.Name + "</td><td>" + row.FatherName + "</td></tr>";
+                            //console.log(row.Name);
+                            //console.log(result[i].Name)
+                        });
+
+                        if (res != '') {
+                            $("#tab1").append(res);
+                        } else { alert("hi") }
+                    }
+                },
+                error: function (err) {
+                    alert(err);
+                }
+            })
+        });
+    </script>
+}

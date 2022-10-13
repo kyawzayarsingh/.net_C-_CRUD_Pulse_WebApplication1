@@ -1,0 +1,85 @@
+﻿@model WebApplication1.Models.StudentModel
+@{
+    ViewBag.Title = "Index";
+}
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+
+<h2>Index</h2>
+@using (Html.BeginForm())
+{
+    <div class="container">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, new { @class = "form-label" })
+            @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.DateOfBirth, new { @class = "form-label" })
+            @*@Html.EditorFor(model => model.DateOfBirth, new {htmlAttributes = new { @class = "form-control datepicker"} })*@
+            @Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { Value = Model.DateOfBirth.ToString("dd-MMM-yyyy"), @class = "form-control datepicker" } })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.OperationType, new { @class = "form-label" })
+            @Html.EnumDropDownListFor(model => model.OperationType, "Select Operation Type", htmlAttributes: new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.TestRoomStatusType, new { @class = "form-label" })
+            @Html.EnumDropDownListFor(model => model.TestRoomStatusType, "Select TestRoomStatus", htmlAttributes: new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.PublishQuestionLevel, new { @class = "form-label" })
+            @Html.EnumDropDownListFor(model => model.PublishQuestionLevel, "Select QuestionLevel", htmlAttributes: new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PublishQuestionLevel, new { @class = "form-label" })
+            @Html.DropDownListFor(model => model.PublishQuestionLevel,(SelectList)ViewBag.QuestionTypes, "Question Types", htmlAttributes: new { @class = "form-control" })
+        </div>
+
+        @foreach (var value in Enum.GetValues(Model.Airlines.GetType()))
+        {
+            <div class="form-check">
+                <label class="form-check-label">
+                    @Html.RadioButtonFor(m => m.Airlines, value, new { id = value, @class = "form-check-input" })
+                    @value.ToString()
+                </label>
+            </div>
+
+            @*<div class="form-check-inline">
+                <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" value=@value>
+                    @value.ToString()
+                </label>
+            </div>*@
+        }
+    </div>
+}
+
+@section Scripts{
+    <script src="~/Scripts/jquery-ui-1.13.2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".datepicker").datepicker({
+                dateFormat: 'dd-M-yy',
+                changeMonth: true, //it will show the month with a dropdownlist
+                changeYear: true, //it will show the year with dropdownlist
+                //showOn: "button",
+                //buttonText: ''
+                //minDate: new Date(), // previous date cannot able to select.
+                yearRange: "-60:+60", // so in your brower, without yearRange, it will show to 2032, with yearRange, show 2082
+            });
+
+            // this is for who is 18 years. If you are not 18, you can't select the date. Date is visible for 18 years old.
+            var date = new Date();
+            date.setDate(date.getDate()); // get current date
+            date.setFullYear(date.getFullYear() - 18); // getFullYear means like this 2022, 2021.
+
+            $("#DateOfBirth").datepicker('setDate', date);
+            $("#DateOfBirth").datepicker('option', 'maxDate', new Date(date));
+            //end
+
+            $("#DateOfBirth").change(function () {
+                alert($(this).val());
+            })
+        });
+    </script>
+}
